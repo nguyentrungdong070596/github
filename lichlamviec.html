@@ -1,0 +1,88 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <script>
+
+    var app = angular.module("myApp", []);
+
+    app.controller("controllerHead" , function($scope){
+      $scope.products = ["A", "B", "C"];
+      $scope.save = function(){
+        if (!$scope.name) {
+          $scope.errortext = "";
+          return;
+        }
+        if ($scope.products.indexOf($scope.name) == -1) {
+          $scope.products.push($scope.name)
+        }else {
+          $scope.errortext = "Error";
+        }
+
+      }
+      $scope.removeItem = function (data){
+        $scope.products.splice(data,1);
+      }
+
+      // $scope.ShowMe = false;
+    });
+
+  </script>
+
+
+  <form class = "container" ng-app = "myApp" ng-controller = "controllerHead">
+    <br />
+    <div class="form-group">
+      <label>Nhập Thông Tin</label>
+      <br />
+      <br />
+      <input type="text" class="form-control" placeholder="Nhập Nội Dung Làm Việc" ng-model = "name">
+    </div>
+  <button type="submit" class="btn btn-default" ng-click = "save()">Save</button>
+  <p>
+    {{errortext}}
+  </p>
+    <br/>
+    <br />
+    </br/>
+    <span>
+      <div class="form-group">
+        <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Thông Tin</th>
+        <th>Xử Ký</th>
+        <th>Check</th>
+        <th>#</th>
+      </tr>
+    </thead>
+        <tr ng-repeat = "data in products" ng-init = "CheckMe = true">
+          <td>
+            {{data}}
+          </td>
+          <td>
+            <button type="submit" class="btn btn-default" ng-click = "removeItem($index)" ng-disabled = "CheckMe">	&nabla;</button>
+          </td>
+          <td>
+            <input type="checkbox" ng-model = "CheckMe" ng-model = "CheckMe" />
+          </td>
+          <td>
+            <button type="submit" class="btn btn-default" ng-disabled = "CheckMe">O</button>
+          </td>
+        </tr>
+
+        <!-- <dt ng-repeat="data in products" class="w3-padding-16">{{data}}<span ng-click="removeItem($index)" style="cursor:pointer;" class="w3-right w3-margin-right">×</span></td> -->
+  </table>
+      </div>
+    </span>
+  </form>
+
+
+
+</body>
+</html>
